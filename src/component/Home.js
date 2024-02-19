@@ -20,7 +20,7 @@ const Home = () => {
           }
         }).then((response) => {
             if (response.status === 200) {
-              setResult(response.data.result);
+              setResult(response.data);
                 setError(null);
             } else {
               console.error('No result found in response:', response);
@@ -38,9 +38,8 @@ const Home = () => {
       } else {
           try {
           axios.get(`http://13.60.40.154:8085/calculator/${operation}/${number}`).then((response) => {
-              console.log(response);
             if (response.status === 200) {
-              setResult(response.data.result);
+              setResult(response.data);
                 setError(null);
             } else {
               console.error('No result found in response:', response);
