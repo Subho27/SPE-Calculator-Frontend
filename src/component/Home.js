@@ -37,12 +37,7 @@ const Home = () => {
         }
       } else {
           try {
-          axios.get(`http://13.60.40.154:8085/calculator/${operation}/${number}`, {
-          params: {
-            number: number,
-            exponent: exponent
-          }
-        }).then((response) => {
+          axios.get(`http://13.60.40.154:8085/calculator/${operation}/${number}`).then((response) => {
             if (response.status === 200) {
               setResult(response.data.result);
                 setError(null);
