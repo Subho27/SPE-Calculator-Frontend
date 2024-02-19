@@ -4,27 +4,21 @@ pipeline {
     stages {
         stage('Checkout Branch') {
             steps {
-                git branch: 'master', url: 'https://github.com/Subho27/SPE-Calculator-Backend.git'
+                git branch: 'master', url: 'https://github.com/Subho27/SPE-Calculator-Frontend.git'
             }
         }
-       
        
         stage('Build Project') {
             steps {
-                sh 'mvn clean compile'
-            }
-        }
-       
-        stage('Unit Testing') {
-            steps {
-                sh 'mvn clean test'
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
        
         stage('Containerize Application') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'docker build -t $DOCKER_USERNAME/calculator-backend .'
+                    sh 'docker build -t $DOCKER_USERNAME/calculator-frontend .'
                 }
             }
         }
@@ -33,7 +27,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                    sh 'docker push $DOCKER_USERNAME/calculator-backend'
+                    sh 'docker push $DOCKER_USERNAME/calculator-frontend'
                 }
             }
         }
