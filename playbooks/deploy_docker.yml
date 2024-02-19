@@ -21,7 +21,7 @@
 
     - name: Pull Docker image from Docker Hub
       docker_image:
-        name: subhodip703/calculator-backend
+        name: subhodip703/calculator-frontend
         source: pull
         state: present
       tags: 
@@ -30,10 +30,10 @@
     - name: Run Docker container
       docker_container:
         name: calculator_backend_container
-        image: subhodip703/calculator-backend
+        image: subhodip703/calculator-frontend
         state: started
         restart_policy: always
         published_ports:
-          - "8083:8080"
+          - "8084:8080"
       tags: 
         - docker
