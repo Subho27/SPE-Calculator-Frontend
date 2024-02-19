@@ -10,35 +10,56 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   const calculate = () => {
-      let axiosPromise;
+      
       if (operation === 'power') {
-        axiosPromise = axios.get(`http://13.60.40.154:8085/calculator/${operation}`, {
+          try {
+          axios.get(`http://13.60.40.154:8085/calculator/${operation}`, {
           params: {
             number: number,
             exponent: exponent
           }
-        });
-      } else {
-        axiosPromise = axios.get(`http://13.60.40.154:8085/calculator/${operation}/${number}`);
-      }
-    
-      axiosPromise
-        .then(response => {
-          console.log('Response:', response); // Log the response for debugging
-          if (response.data && response.data.result) {
-            setResult(response.data.result);
-            setError(null);
-          } else {
-            console.error('No result found in response:', response);
+        }).then((response) => {
+            if (response.status === 200) {
+              setResult(response.data.result);
+                setError(null);
+            } else {
+              console.error('No result found in response:', response);
             setResult(null);
             setError('Error: No result found in response');
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
+            }
+          }).catch(error => {
+            console.error('Error fetching data:', error);
           setResult(null);
           setError('Error: Something went wrong. Please try again.');
-        });
+          });
+        } catch (error) {
+          console.error('Error during logout:', error);
+        }
+      } else {
+          try {
+          axios.get(`http://13.60.40.154:8085/calculator/${operation}/${number}`, {
+          params: {
+            number: number,
+            exponent: exponent
+          }
+        }).then((response) => {
+            if (response.status === 200) {
+              setResult(response.data.result);
+                setError(null);
+            } else {
+              console.error('No result found in response:', response);
+            setResult(null);
+            setError('Error: No result found in response');
+            }
+          }).catch(error => {
+            console.error('Error fetching data:', error);
+          setResult(null);
+          setError('Error: Something went wrong. Please try again.');
+          });
+        } catch (error) {
+          console.error('Error during logout:', error);
+        }
+      }
     };
 
 
