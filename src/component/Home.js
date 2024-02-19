@@ -77,8 +77,8 @@ const Home = () => {
       )}
       <select value={operation} onChange={(e) => setOperation(e.target.value)}>
         <option value="factorial">Factorial</option>
-        <option value="log">Logarithm</option>
-        <option value="sqrt">Square Root</option>
+        <option value="natural-log">Logarithm</option>
+        <option value="square-root">Square Root</option>
         <option value="power">Power</option>
       </select>
       <button onClick={calculate}>Calculate</button>
