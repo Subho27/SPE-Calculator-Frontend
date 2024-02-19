@@ -24,6 +24,7 @@
         name: subhodip703/calculator-frontend
         source: pull
         state: present
+        force_source: yes
       tags: 
         - docker
 
