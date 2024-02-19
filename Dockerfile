@@ -1,27 +1,29 @@
-# Use the official Maven image as the base image
-FROM maven:3.8.3-openjdk-17 AS build
+# Use an official Node.js runtime as the base image
+FROM node:18.18.2 as build
 
-# Set the working directory inside the container
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the Maven project files to the container
-COPY pom.xml .
-COPY src ./src
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
 
-# Build the Maven project
-RUN mvn clean package
+# Install dependencies
+RUN npm install
 
-# Use the official OpenJDK image as the base image for the final runtime image
-FROM openjdk:17-jdk-alpine
+# Copy the entire project to the working directory
+COPY . .
 
-# Set the working directory inside the container
-WORKDIR /app
+# Build the React app for production
+RUN npm run build
 
-# Copy the compiled Java application from the build stage to the container
-COPY --from=build /app/target/*.jar ./app.jar
+# Use NGINX as the base image for serving the React app
+FROM nginx:alpine
 
-# Expose the port that your application will listen on
-EXPOSE 8080
+# Copy the built React app from the build stage to the NGINX html directory
+COPY --from=build /app/build /usr/share/nginx/html
 
-# Define the command to run your application
-CMD ["java", "-jar", "app.jar"]
+# Expose port 80 to allow outside access to the app
+EXPOSE 80
+
+# Start NGINX to serve the React app
+CMD ["nginx", "-g", "daemon off;"]
