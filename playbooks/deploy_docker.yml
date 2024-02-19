@@ -29,7 +29,7 @@
 
     - name: Run Docker container
       docker_container:
-        name: calculator_backend_container
+        name: calculator_frontend_container
         image: subhodip703/calculator-frontend
         state: started
         restart_policy: always
