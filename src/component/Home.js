@@ -13,14 +13,14 @@ const Home = () => {
     try {
       let response;
       if (operation === 'power') {
-        response = await axios.get(`http://13.60.40.154:8083//${operation}`, {
+        response = await axios.get(`http://13.60.40.154:8083/calculator/${operation}`, {
           params: {
             number: number,
             exponent: exponent
           }
         });
       } else {
-        response = await axios.get(`http://13.60.40.154:8083//${operation}/${number}`);
+        response = await axios.get(`http://13.60.40.154:8083/calculator/${operation}/${number}`);
       }
       setResult(response.data.result);
       setError(null);
