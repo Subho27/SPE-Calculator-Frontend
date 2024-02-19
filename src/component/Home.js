@@ -9,27 +9,38 @@ const Home = () => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const calculate = async () => {
-    try {
-      let response;
+  const calculate = () => {
+      let axiosPromise;
       if (operation === 'power') {
-        response = await axios.get(`http://13.60.40.154:8085/calculator/${operation}`, {
+        axiosPromise = axios.get(`http://13.60.40.154:8085/calculator/${operation}`, {
           params: {
             number: number,
             exponent: exponent
           }
         });
       } else {
-        response = await axios.get(`http://13.60.40.154:8085/calculator/${operation}/${number}`);
+        axiosPromise = axios.get(`http://13.60.40.154:8085/calculator/${operation}/${number}`);
       }
-      setResult(response.data.result);
-      setError(null);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setResult(null);
-      setError('Error: Something went wrong. Please try again.');
-    }
-  };
+    
+      axiosPromise
+        .then(response => {
+          console.log('Response:', response); // Log the response for debugging
+          if (response.data && response.data.result) {
+            setResult(response.data.result);
+            setError(null);
+          } else {
+            console.error('No result found in response:', response);
+            setResult(null);
+            setError('Error: No result found in response');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+          setResult(null);
+          setError('Error: Something went wrong. Please try again.');
+        });
+    };
+
 
   return (
     <div className="calculator">
