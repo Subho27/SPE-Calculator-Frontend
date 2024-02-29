@@ -35,6 +35,6 @@
         state: started
         restart_policy: always
         published_ports:
-          - "8084:80"
+          - "8087:80"
       tags: 
         - docker
