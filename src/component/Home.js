@@ -37,7 +37,7 @@ const Home = () => {
         }
       } else {
           try {
-          axios.get(`http://16.171.132.80:8085/calculator/${operation}/${number}`).then((response) => {
+          axios.get(`http://13.49.67.53:8086/calculator/${operation}/${number}`).then((response) => {
             if (response.status === 200) {
               setResult(response.data);
                 setError(null);
