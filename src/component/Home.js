@@ -13,7 +13,7 @@ const Home = () => {
       
       if (operation === 'power') {
           try {
-          axios.get(`http://13.49.67.53:8085/calculator/${operation}`, {
+          axios.get(`http://13.49.67.53:8086/calculator/${operation}`, {
           params: {
             number: number,
             exponent: exponent
