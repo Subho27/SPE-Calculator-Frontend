@@ -81,6 +81,7 @@ const Home = () => {
         <option value="square-root">Square Root</option>
         <option value="power">Power</option>
       </select>
+    Hello
       <button onClick={calculate}>Calculate</button>
       {error && <p className="error">{error}</p>}
       {result !== null && <p className="result">Result: {result}</p>}
